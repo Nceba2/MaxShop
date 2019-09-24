@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MaxShopApi.models;
 
 namespace MaxShopApi.Controllers
 {
@@ -10,11 +11,21 @@ namespace MaxShopApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
+        }
+
+        // GET api/values/styles
+        [HttpGet("table/{table}")]
+        public ActionResult<string> Get(string table)
+        {
+            userModel users = new userModel();
+                users.setUsers("SELECT * FROM user");
+            return "Table: " + users.getUsers()[0][1];
         }
 
         // GET api/values/5
@@ -27,18 +38,6 @@ namespace MaxShopApi.Controllers
         // POST api/values
         [HttpPost]
         public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
         {
         }
     }
