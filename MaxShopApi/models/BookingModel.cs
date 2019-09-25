@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace MaxShopApi.models
 {
-    public class userModel
+    internal class BookingModel
     {
         private SqlConnectionModel SqlConnModel;
         private List<string[]> rows;
 
-        public userModel()
+        public BookingModel()
         {
             SqlConnModel = new SqlConnectionModel();
             this.rows = new List<string[]>();
         }
-        public void setUsers(string sql_query)
+        internal void setBooking(string sql_query)
         {
             SqlConnModel.setData(sql_query);
             MySqlDataReader reader = SqlConnModel.getData();
@@ -29,16 +29,18 @@ namespace MaxShopApi.models
 
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
                     String name = reader.GetString(reader.GetOrdinal("name"));
-                    String email = reader.GetString(reader.GetOrdinal("email"));
-                    String password = reader.GetString(reader.GetOrdinal("password"));
+                    String email = reader.GetString(reader.GetOrdinal("details"));
+                    int price = reader.GetInt32(reader.GetOrdinal("price"));
+                    String image = reader.GetString(reader.GetOrdinal("image"));
 
-                    columns = new string[] { id.ToString(), name, email, password };
+                    columns = new string[] { id.ToString(), name, email, price.ToString(), image };
 
                     this.rows.Add(columns);
                 }
             }
         }
-        public List<string[]> getUsers()
+
+        internal List<string[]> getBooking()
         {
             return rows;
         }

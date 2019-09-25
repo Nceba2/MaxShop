@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MaShop.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MaShop.Controllers
 {
@@ -12,6 +13,7 @@ namespace MaShop.Controllers
     {
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("me", "this details made by me..");
             return View();
         }
 
@@ -28,7 +30,25 @@ namespace MaShop.Controllers
 
             return View();
         }
+        public IActionResult Login()
+        {
+            ViewData["Message"] = "Session value: "+HttpContext.Session.GetString("me");
 
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            ViewData["Message"] = "logging in...";
+
+            return View();
+        }
+        public IActionResult Booker()
+        {
+            ViewData["Message"] = "logging in...";
+
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

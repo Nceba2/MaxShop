@@ -11,7 +11,8 @@ namespace MaxShopApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        
+        TablesController tables = new TablesController();
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -19,15 +20,13 @@ namespace MaxShopApi.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/styles
+        // GET api/values/table/styles
         [HttpGet("table/{table}")]
-        public ActionResult<string> Get(string table)
+        public List<string[]> Get(string table)
         {
-            userModel users = new userModel();
-                users.setUsers("SELECT * FROM user");
-            return "Table: " + users.getUsers()[0][1];
+            tables.setTable(table);
+            return tables.getTable();
         }
-
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
