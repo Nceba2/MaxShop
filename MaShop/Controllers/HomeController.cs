@@ -13,40 +13,34 @@ namespace MaShop.Controllers
     {
         public IActionResult Index()
         {
-            HttpContext.Session.SetString("me", "this details made by me..");
             return View();
         }
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
         public IActionResult Login()
         {
-            ViewData["Message"] = "Session value: "+HttpContext.Session.GetString("me");
-
             return View();
         }
+        public IActionResult Loging_in()
+        {
+            ViewData["Message"] = "loging in..";
 
+            return View("Login");
+        }
         public IActionResult Register()
         {
-            ViewData["Message"] = "logging in...";
-
             return View();
         }
         public IActionResult Booker()
         {
-            ViewData["Message"] = "logging in...";
-
             return View();
         }
         public IActionResult Privacy()
