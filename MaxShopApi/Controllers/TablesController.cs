@@ -10,7 +10,8 @@ namespace MaxShopApi.Controllers
         private userModel users;
         private StyleModel styles;
         private BookingModel booking;
-        List<string[]> _tableData;
+
+        private List<string[]> _tableData;
 
         public TablesController()
         {
@@ -36,6 +37,9 @@ namespace MaxShopApi.Controllers
                 case "order":
                     booking.setBooking("SELECT * FROM booking");
                     this._tableData = booking.getBooking();
+                    break;
+                default:
+                    this._tableData = null;
                     break;
             }
         }

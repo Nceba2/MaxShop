@@ -15,18 +15,21 @@ namespace MaxShopApi.models
         public SqlConnectionModel()
         {
             var configuration = GetConfiguration();
-            con = new MySqlConnection(configuration.GetSection("ConnectionStrings").GetSection("DefualtConnection").Value);
-            con.Open();
+            this.con = new MySqlConnection(configuration.GetSection("ConnectionStrings").GetSection("DefualtConnection").Value);
+            
         }
 
         public void setData(String query)
         {
+            con.Open();
             MySqlCommand command = new MySqlCommand(query, con);
             this.reader = command.ExecuteReader();
+            //command.Dispose();
         }
 
         public MySqlDataReader getData()
         {
+            //con.Close();
             return reader;
         }
 
