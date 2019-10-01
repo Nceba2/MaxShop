@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="row">
+    <div class="col-md-12 banner"><center><h1>Max's Barber Shop</h1></center></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <b><h4>| @ViewData["Title"]</h4></b>
+        <p>
+            This is a simple Barber shop booking system.<br/>
+            you can book for you hair cut and pay later,<br/>
+            or pay her on the system using ipay payment system<br/>
+            we get a lot of booking request so please be on time<br/>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <u><h3>Styles</h3></u>
+        <div class="row">
+            @{
+                //the HomeController will these generate values
+                string[] items =(string[]) @ViewData["items"];
+                string[] prices =(string[]) @ViewData["prices"];
+                string[] images = (string[]) @ViewData["images"];
+                string[] imageConverted = new string[] { };
+                imageConverted = images;
+
+                //using loops to provide items on the an array to menu
+                @foreach(string i in imageConverted)
+                {
+                    int index = Array.IndexOf(images, @i);
+
+                        <div class="col-md-4">
+                             <img src="~/images/Styles/@i" width="100%" height="250px"/>
+                             <p>@items[index]</p>
+                             <p>R @prices[index] | <a href="/Home/Booker/@index">Book</a></p>
+                        </div>
+                    }
+
+            }
+        </div>
+    </div>
+        
+    <div class="col-md-3 overview">
+        <h2>Overview</h2>
+        <ul>
+            <li><a href="#">Regular style</a></li>
+            <li><a href="#">Specials</a></li>
+            <li><a href="#">Discounts</a></li>
+            <li><a href="#">Help & Support</a></li>
+            <li><a href="#">Documentations</a></li>
+        </ul>
+    </div>
+</div>
+
