@@ -13,6 +13,15 @@ namespace MaShop.Controllers
     {
         public IActionResult Index()
         {
+            /*
+             * these values would be from interface
+             * the interface would be getting values
+             * from the class requesting information from the api
+            */
+            ViewData["items"] = new string[] {"first cut","second cut","third cut" };
+            ViewData["prices"] = new string[] { "60", "50", "20" };
+            ViewData["images"] = new string[] { "cut4.jpg", "cut2.jpg", "cut3.jpg" };
+
             return View();
         }
 
