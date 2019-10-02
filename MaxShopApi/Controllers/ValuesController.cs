@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MaxShopApi.models;
@@ -22,7 +23,7 @@ namespace MaxShopApi.Controllers
 
         // GET api/values/table/styles
         [HttpGet("table/{table}")]
-        public List<string[]> Get(string table)
+        public JArray Get(string table)
         {
             tables.setTable(table);
             return tables.getTable();

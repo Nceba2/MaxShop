@@ -1,6 +1,7 @@
 ﻿using System;
 using MaxShopApi.models;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace MaxShopApi.Controllers
 {
@@ -11,7 +12,7 @@ namespace MaxShopApi.Controllers
         private StyleModel styles;
         private BookingModel booking;
 
-        private List<string[]> _tableData;
+        private JArray _tableData;
 
         public TablesController()
         {
@@ -44,7 +45,7 @@ namespace MaxShopApi.Controllers
             }
         }
 
-        public List<string[]> getTable()
+        public JArray getTable()
         {
             return _tableData;
         }
