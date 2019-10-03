@@ -26,20 +26,21 @@ namespace MaxShopApi.models
             {
                 while (reader.Read())
                 {
-                    //string[] columns;
-
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
                     String name = reader.GetString(reader.GetOrdinal("name"));
                     String email = reader.GetString(reader.GetOrdinal("email"));
-                    String password = reader.GetString(reader.GetOrdinal("password"));
-
-                    //columns = new string[] { id.ToString(), name, email, password };
+                    String cellnumber = reader.GetString(reader.GetOrdinal("cellnumber"));
+                    String profile_pic = reader.GetString(reader.GetOrdinal("profile_pic"));
+                    String type = reader.GetString(reader.GetOrdinal("type"));
 
                     var columns = new JObject();
                     columns["id"] = id.ToString();
                     columns["name"] = name;
                     columns["email"] = email;
-                    columns["password"] = password;
+                    columns["cellnumber"] = cellnumber;
+                    columns["profile_pic"] = profile_pic;
+                    columns["type"] = type;
+
 
                     this.rows.Add(columns);
                 }
