@@ -16,9 +16,10 @@ namespace MaxShopApi.Controllers
 
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public JArray Get()
         {
-            return new string[] { "value1", "value2" };
+            tables.setTable("styles");
+            return tables.getTable();
         }
 
         // GET api/values/table/styles
@@ -32,24 +33,20 @@ namespace MaxShopApi.Controllers
         //the following get method is for logging in
         // GET api/values/table/styles
         [HttpGet("table/{tableName}/{password}/{email}")]
-        public JArray Get(string tableName,string password,string email)
+        public JArray Get(string tableName, string password, string email)
         {
-            tables.setCredentials(password,email);
+            tables.setCredentials(password, email);
             tables.setTable(tableName);
             return tables.getTable();
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public JArray Post([FromHeader] string tableName, [FromHeader] string password, [FromHeader] string email)
         {
+            tables.setCredentials(password, email);
+            tables.setTable(tableName);
+            return tables.getTable();
         }
     }
 }
