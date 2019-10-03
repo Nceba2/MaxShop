@@ -22,12 +22,23 @@ namespace MaxShopApi.Controllers
         }
 
         // GET api/values/table/styles
-        [HttpGet("table/{table}")]
-        public JArray Get(string table)
+        [HttpGet("table/{tablename}")]
+        public JArray Get(string tableName)
         {
-            tables.setTable(table);
+            tables.setTable(tableName);
             return tables.getTable();
         }
+
+        //the following get method is for logging in
+        // GET api/values/table/styles
+        [HttpGet("table/{tableName}/{password}/{email}")]
+        public JArray Get(string tableName,string password,string email)
+        {
+            tables.setCredentials(password,email);
+            tables.setTable(tableName);
+            return tables.getTable();
+        }
+
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
