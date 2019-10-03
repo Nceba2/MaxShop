@@ -13,7 +13,8 @@ namespace MaShop.Controllers
 {
     public class HomeController : Controller
     {
-        
+        IRestController RestCtr = new RestController();
+
         public IActionResult Index()
         {
             /*
@@ -21,8 +22,7 @@ namespace MaShop.Controllers
              * the interface would be getting values
              * from the class requesting information from the api
             */
-            IRestController RestCtr = new RestController();
-
+            
             ViewData["items"] = RestCtr.GetStyles().OfType <JObject> ().ToList();
 
             return View();
