@@ -1,19 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Net;
 using Newtonsoft.Json.Linq;
 
 namespace MaShop.Controllers
 {
     interface IRestController
     {
-        void ApiRequest_setResponse(string url);
+        string password { get; set; }
+
+        string email { get; set; }
+
+        WebHeaderCollection _webQueryString { get; set; }
 
         JArray GetStyles();
 
-        string DoLogin(string[] Login_data);
+        List<JObject> DoLogin();
 
-        string DoRegister(string[] Register_data);
+        string DoRegister();
 
-        string DoBooking(string[] Booking_data);
+        string DoBooking();
     }
 
 }

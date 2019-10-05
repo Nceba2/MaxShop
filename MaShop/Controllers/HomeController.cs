@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MaShop.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using System.Text;
 //using MaxShopApi;
 
 namespace MaShop.Controllers
@@ -41,9 +42,12 @@ namespace MaShop.Controllers
         {
             return View();
         }
-        public IActionResult Loging_in()
+        public IActionResult Loging_in([FromForm] string email,[FromForm] string password)
         {
-            ViewData["Message"] = "loging in..";
+            RestCtr.email = email;
+            RestCtr.password = password;
+
+            ViewData["Message"] = ""+ RestCtr.DoLogin()[0]["name"];
 
             return View("Login");
         }

@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
+using System.Text;
+using MaShop.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,39 +17,45 @@ namespace MaShop.Controllers
 {
     public class RestController : IRestController
     {
+        string url = "https://localhost:5002/api/values";
 
         JArray responseStr { get; set; }
+        public WebHeaderCollection _webQueryString { get; set; }
+        public string password { get; set; }
+        public string email { get; set; }
+
+        IApiRequestModel apiReq = new ApiRequestModel();
+
         public RestController()
         {
         }
 
-        public void ApiRequest_setResponse(string url)
+        public JArray GetStyles()
         {
-            using (var wb = new WebClient())
-            {
-                this.responseStr = JArray.Parse(wb.DownloadString(url));
-            }
+            this.responseStr = apiReq.ApiGet(url + "/table/styles");
+            return responseStr;
         }
 
-        public string DoBooking(string[] Booking_data)
+        public List<JObject> DoLogin()
         {
-            return "booking";
+            _webQueryString = new WebHeaderCollection() { };
+            _webQueryString.Add("tableName", "login");
+            _webQueryString.Add("password", this.password);
+            _webQueryString.Add("email", this.email);
+
+            this.responseStr = apiReq.ApiPost(url, _webQueryString);
+
+            return responseStr.OfType<JObject>().ToList();
         }
 
-        public string DoLogin(string[] Login_data)
-        {
-            return "logging in";
-        }
-
-        public string DoRegister(string[] Register_data)
+        public string DoRegister()
         {
             return "register";
         }
 
-        public JArray GetStyles()
+        public string DoBooking()
         {
-            ApiRequest_setResponse("https://localhost:5002/api/values/table/styles");
-            return responseStr;
+            return "booking";
         }
     }
 }
