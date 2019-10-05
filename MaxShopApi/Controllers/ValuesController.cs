@@ -30,16 +30,7 @@ namespace MaxShopApi.Controllers
             return tables.getTable();
         }
 
-        //the following get method is for logging in
-        // GET api/values/table/styles
-        [HttpGet("table/{tableName}/{password}/{email}")]
-        public JArray Get(string tableName, string password, string email)
-        {
-            tables.setCredentials(password, email);
-            tables.setTable(tableName);
-            return tables.getTable();
-        }
-
+        //the following method is for logging in
         // POST api/values
         [HttpPost]
         public JArray Post([FromHeader] string tableName, [FromHeader] string password, [FromHeader] string email)
