@@ -1,9 +1,16 @@
-﻿namespace MaShop.Models
+﻿using Newtonsoft.Json.Linq;
+
+namespace MaShop.Models
 {
     public interface IValidationMoel
     {
-         bool ValidateLogin();
+        string name { get; set; }
+        string email { get; set; }
+        string phonenumber { get; set; }
+        string password { get; set; }
 
-         bool ValidateRegistration();
+        bool ValidateLogin(JArray responseStr);
+
+         bool ValidateRegistration(JArray responseStr);
     }
 }
