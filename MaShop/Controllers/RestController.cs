@@ -21,10 +21,13 @@ namespace MaShop.Controllers
 
         JArray responseStr { get; set; }
         public WebHeaderCollection _webQueryString { get; set; }
+        public string name { get; set; }
+        public string phonenumber { get; set; }
         public string password { get; set; }
         public string email { get; set; }
 
         IApiRequestModel apiReq = new ApiRequestModel();
+        IValidationMoel validation = new ValidationModel();
 
         public RestController()
         {
@@ -36,26 +39,31 @@ namespace MaShop.Controllers
             return responseStr;
         }
 
-        public List<JObject> DoLogin()
+        public bool DoLogin()
         {
-            _webQueryString = new WebHeaderCollection() { };
-            _webQueryString.Add("tableName", "login");
-            _webQueryString.Add("password", this.password);
-            _webQueryString.Add("email", this.email);
+            validation.email = this.email;
+            validation.password = this.password;
+            bool validationBool = validation.ValidateLogin(responseStr);
 
-            this.responseStr = apiReq.ApiPost(url, _webQueryString);
-
-            return responseStr.OfType<JObject>().ToList();
+            return validationBool;
         }
 
-        public string DoRegister()
+        public bool DoRegister()
         {
-            return "register";
+            validation.name = this.name;
+            validation.phonenumber = this.phonenumber;
+            validation.email = this.email;
+            validation.password = this.password;
+
+            bool validationBool = validation.ValidateRegistration(responseStr);
+            
+            return validationBool;
         }
 
         public string DoBooking()
         {
             return "booking";
         }
+
     }
 }

@@ -15,9 +15,9 @@ namespace MaShop.Controllers
 
         JArray GetStyles();
 
-        List<JObject> DoLogin();
+        bool DoLogin();
 
-        string DoRegister();
+        bool DoRegister();
 
         string DoBooking();
     }

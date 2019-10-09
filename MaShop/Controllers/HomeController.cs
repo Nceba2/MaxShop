@@ -47,9 +47,17 @@ namespace MaShop.Controllers
             RestCtr.email = email;
             RestCtr.password = password;
 
-            ViewData["Message"] = ""+ RestCtr.DoLogin()[0]["name"];
+            if (RestCtr.DoLogin() == true)
+            {
+                ViewData["Message"] = "logged";
+                return View("Booker");
+            }
+            else
+            {
+                ViewData["Message"] = "password or email address invalid";
+                return View("Login");
+            }
 
-            return View("Login");
         }
         public IActionResult Register()
         {
