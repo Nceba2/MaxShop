@@ -14,7 +14,7 @@ namespace MaShop.Controllers
 {
     public class HomeController : Controller
     {
-        IRestController RestCtr = new RestController();
+        IDataController RestCtr = new DataController();
 
         public IActionResult Index()
         {
@@ -31,6 +31,7 @@ namespace MaShop.Controllers
 
         public IActionResult About()
         {
+            ViewData["Message"] += "[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-10T10:30:00\",\"end\":\"2019-10-10T16:30:00\"}]";
             return View();
         }
 

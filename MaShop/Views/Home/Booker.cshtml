@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Booking Page";
+    
 }
 <div class="row">
     <div class="col-md-12 banner"><center><h1>Max's Barber Shop</h1></center></div>
@@ -12,16 +13,39 @@
             you can book for you hair cut and pay later,<br/>
             or pay her on the system using ipay payment system<br/>
             we get a lot of booking request so please be on time<br/>
+            | @ViewData["Message"]
         </p>
     </div>
 </div>
 <div class="row">
     <div class="col-md-9">
-        <u><h3>Book</h3></u>
-        <form class="form" placeholder="Register">
-           <h4>Booking table here for week overview...</h4>
-        </form>
-    </div>
+        <u><h3>Books</h3></u>
+  <div id="day-schedule"></div>
+
+<!--<script src="~/js/jquery-1.11.3.min.js"></script>-->
+<script src="~/js/daypilot-all.min.js" type="text/javascript"></script>
+<div id="dp"></div>
+<script>
+/*function loadEvents() {
+  $.get("https://localhost:5002/api/values/bookings", //api request
+  {
+      start: dp.visibleStart().toString(),
+      end: dp.visibleEnd().toString()
+  }, 
+  function(data) {
+      dp.events.list = data;
+      dp.update();
+  });
+}*/
+  var dp = new DayPilot.Calendar("dp");
+  dp.viewType = "Week";
+  dp.events.list = @ViewData["Message"]
+  dp.init();
+</script>
+
+</div>
+
+
         
     <div class="col-md-3 overview">
         <h2>Overview</h2>
