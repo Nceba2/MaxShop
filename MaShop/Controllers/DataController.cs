@@ -15,22 +15,27 @@ using Newtonsoft.Json.Linq;
 
 namespace MaShop.Controllers
 {
-    public class RestController : IRestController
+    public class DataController : IDataController
     {
-        string url = "https://localhost:5002/api/values";
-
-        JArray responseStr { get; set; }
         public WebHeaderCollection _webQueryString { get; set; }
         public string name { get; set; }
         public string phonenumber { get; set; }
         public string password { get; set; }
+        public string confirm_password { get; set; }
         public string email { get; set; }
 
-        IApiRequestModel apiReq = new ApiRequestModel();
-        IValidationMoel validation = new ValidationModel();
+        private IApiRequestModel apiReq;
+        private IValidationMoel validation;
 
-        public RestController()
+        private string url;
+        private bool validationBool;
+        private JArray responseStr { get; set; }
+
+        public DataController()
         {
+             this.url = "https://localhost:5002/api/values";
+             this.apiReq = new ApiRequestModel();
+             this.validation = new ValidationModel();
         }
 
         public JArray GetStyles()
@@ -43,20 +48,27 @@ namespace MaShop.Controllers
         {
             validation.email = this.email;
             validation.password = this.password;
-            bool validationBool = validation.ValidateLogin(responseStr);
+
+            this.validationBool = validation.ValidateLogin(responseStr);
 
             return validationBool;
         }
 
         public bool DoRegister()
         {
-            validation.name = this.name;
-            validation.phonenumber = this.phonenumber;
-            validation.email = this.email;
-            validation.password = this.password;
+            if (this.confirm_password == this.phonenumber)
+            {
+                validation.name = this.name;
+                validation.phonenumber = this.phonenumber;
+                validation.email = this.email;
+                validation.password = this.password;
 
-            bool validationBool = validation.ValidateRegistration(responseStr);
-            
+                this.validationBool = validation.ValidateRegistration(responseStr);
+            }
+            else
+            {
+                this.validationBool = false;
+            }
             return validationBool;
         }
 

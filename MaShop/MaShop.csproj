@@ -22,4 +22,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\Styles\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\Calender.js" />
+  </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 
 namespace MaShop.Controllers
 {
-    interface IRestController
+    interface IDataController
     {
         string password { get; set; }
 
