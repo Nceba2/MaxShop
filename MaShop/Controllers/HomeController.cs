@@ -68,7 +68,8 @@ namespace MaShop.Controllers
             //restructure booking table as id|text|start|end|userid|styleid
             //add insert delete view from api
 
-            ViewData["Message"] += "[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-10T10:30:00\",\"end\":\"2019-10-10T11:30:00\"}]";
+            //ViewData["Message"] += "[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-10T10:30:00\",\"end\":\"2019-10-10T11:30:00\"}]";
+            ViewData["Message"] = RestCtr.GetBookings();
             return View();
         }
         public IActionResult Privacy()

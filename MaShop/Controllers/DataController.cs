@@ -77,5 +77,10 @@ namespace MaShop.Controllers
             return "booking";
         }
 
+        public string GetBookings()
+        {
+            this.responseStr = apiReq.ApiGet(url + "/table/bookings");
+            return responseStr.ToString();
+        }
     }
 }
