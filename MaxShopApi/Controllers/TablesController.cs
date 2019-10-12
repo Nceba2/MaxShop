@@ -49,6 +49,11 @@ namespace MaxShopApi.Controllers
                     booking.setBooking("SELECT * FROM booking");
                     this._tableData = booking.getBooking();
                     break;
+
+                case "bookings":
+                    //booking.setBooking("SELECT * FROM booking");
+                    this._tableData =JArray.Parse("[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-10T10:30:00\",\"end\":\"2019-10-10T16:30:00\"}]"); 
+                    break;
                 default:
                     this._tableData = null;
                     break;

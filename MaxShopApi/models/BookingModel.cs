@@ -26,16 +26,11 @@ namespace MaxShopApi.models
             {
                 while (reader.Read())
                 {
-                    //string[] columns;
-
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
                     String name = reader.GetString(reader.GetOrdinal("name"));
                     String email = reader.GetString(reader.GetOrdinal("details"));
                     int price = reader.GetInt32(reader.GetOrdinal("price"));
                     String image = reader.GetString(reader.GetOrdinal("image"));
-
-                    //columns = new string[] { id.ToString(), name, email, price.ToString(), image };
-
 
                     var columns = new JObject();
                     columns["id"] = id.ToString();

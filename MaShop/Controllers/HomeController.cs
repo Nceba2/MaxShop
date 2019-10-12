@@ -31,7 +31,6 @@ namespace MaShop.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] += "[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-10T10:30:00\",\"end\":\"2019-10-10T16:30:00\"}]";
             return View();
         }
 
@@ -66,6 +65,10 @@ namespace MaShop.Controllers
         }
         public IActionResult Booker()
         {
+            //restructure booking table as id|text|start|end|userid|styleid
+            //add insert delete view from api
+
+            ViewData["Message"] += "[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-10T10:30:00\",\"end\":\"2019-10-10T11:30:00\"}]";
             return View();
         }
         public IActionResult Privacy()
