@@ -12,13 +12,14 @@ namespace MaxShopApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        TablesController tables = new TablesController();
+        ITablesController tables = new TablesController();
 
         // GET api/values
         [HttpGet]
         public JArray Get()
         {
-            tables.setTable("styles");
+            tables.tableName = "styles";
+            tables.setTable();
             return tables.getTable();
         }
 
@@ -26,7 +27,8 @@ namespace MaxShopApi.Controllers
         [HttpGet("table/{tablename}")]
         public JArray Get(string tableName)
         {
-            tables.setTable(tableName);
+            tables.tableName = tableName;
+            tables.setTable();
             return tables.getTable();
         }
 
@@ -36,7 +38,21 @@ namespace MaxShopApi.Controllers
         public JArray Post([FromHeader] string tableName, [FromHeader] string password, [FromHeader] string email)
         {
             tables.setCredentials(password, email);
-            tables.setTable(tableName);
+            tables.tableName = tableName;
+            tables.setTable();
+            return tables.getTable();
+        }
+        [HttpPost]
+        public JArray Post([FromHeader] string tableName, [FromHeader] string date, [FromHeader] string time,
+                            [FromHeader] string style_id, [FromHeader] string user_id)
+        {
+            tables.date = date;
+            tables.time = time;
+            tables.userid = user_id;
+            tables.styleid = style_id;
+
+            tables.tableName = tableName;
+            tables.setTable();
             return tables.getTable();
         }
     }

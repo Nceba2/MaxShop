@@ -5,8 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace MaxShopApi.Controllers
 {
-    public class TablesController
+    public class TablesController: ITablesController
     {
+        public string tableName { get; set; }
 
         private userModel users;
         private StyleModel styles;
@@ -15,6 +16,11 @@ namespace MaxShopApi.Controllers
         private string email;
         private string password;
         private JArray _tableData;
+
+        public string date { get; set; }
+        public string time { get; set; }
+        public string userid { get; set; }
+        public string styleid { get; set; }
 
         public TablesController()
         {
@@ -27,7 +33,8 @@ namespace MaxShopApi.Controllers
             this.email = emailaddress;
             this.password = userpassword;
         }
-        public void setTable(string tableName)
+
+        public void setTable()
         {
             switch (tableName)
             {
@@ -53,6 +60,12 @@ namespace MaxShopApi.Controllers
                 case "bookings":
                     //booking.setBooking("SELECT * FROM booking");
                     this._tableData =JArray.Parse("[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"); 
+                    break;
+
+                case "book":
+                    //insert values to database table
+                    //booking.setBooking("SELECT * FROM booking");
+                    this._tableData = JArray.Parse("[{\"response\":\"booked\"}]");
                     break;
                 default:
                     this._tableData = null;
