@@ -16,14 +16,17 @@ namespace MaShop.Controllers
     {
         IDataController RestCtr = new DataController();
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] string date, [FromQuery] string time)
         {
             /*
              * these values would be from interface
              * the interface would be getting values
              * from the class requesting information from the api
             */
-            
+            if (date != null && time != null)
+            {
+                ViewData["Message"] = RestCtr.DoBooking();
+            }
             ViewData["items"] = RestCtr.GetStyles().OfType <JObject> ().ToList();
 
             return View();
@@ -63,12 +66,11 @@ namespace MaShop.Controllers
         {
             return View();
         }
-        public IActionResult Booker()
+        public IActionResult Booker([FromForm] string date, [FromForm] string time)
         {
             //restructure booking table as id|text|start|end|userid|styleid
             //add insert delete view from api
 
-            //ViewData["Message"] += "[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-10T10:30:00\",\"end\":\"2019-10-10T11:30:00\"}]";
             ViewData["Message"] = RestCtr.GetBookings();
             return View();
         }

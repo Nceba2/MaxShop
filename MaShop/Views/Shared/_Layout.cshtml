@@ -77,11 +77,12 @@
         <h4 class="modal-title">Booking...</h4>
       </div>
       <div class="modal-body">
+          
         <p>You are about to book for the following style.<br/>
           please fill in all the required fields</p>
      
-              <lable><h1>Style Name</h1></lable>
-              <lable><h1>R100.00</h1></lable>
+              <lable><h1 id="stylename">Style Name</h1></lable>
+              <lable><h1 id="price">R100.00</h1></lable>
               <label>Date: </label>
               <input type="date" name="date" data-date-format="YYYY-MM-DD" placeholder="Date" required/>
               <lable>Time: </lable>
@@ -96,7 +97,9 @@
                     <option value="15:00">15h00</option>
                     <option value="16:00">16h00</option>
                     <option value="17:00">17h00</option>
-                </select> 
+                </select>
+              <input type="hidden" name="style_id" id="item_id"/>
+              <input type="hidden" name="user_id" id="user_id"/>
       </div>
       <div class="modal-footer">
         <input type="submit" class="btn btn-primary" value="Book Now"/>
@@ -126,14 +129,12 @@
                     asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                     asp-fallback-test="window.jQuery"
                     crossorigin="anonymous"
-                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-            </script>
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
                     asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                     asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                     crossorigin="anonymous"
-                    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-            </script>
+                    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"></script>
             <script src="~/js/site.min.js" asp-append-version="true"></script>
         </environment>
 

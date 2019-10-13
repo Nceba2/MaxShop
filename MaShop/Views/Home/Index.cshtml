@@ -12,6 +12,7 @@
             you can book for you hair cut and pay later,<br/>
             or pay her on the system using ipay payment system<br/>
             we get a lot of booking request so please be on time<br/>
+            |@ViewData["Message"]
         </p>
     </div>
 </div>
@@ -31,14 +32,26 @@
                         <div class="col-md-4">
                              <img src="~/Images/Styles/@item["image"]" width="100%" height="250px"/>
                              <p>@item["name"]</p>
-                             <p>R @item["price"] | <a href="#"  data-toggle="modal" data-target="#BookerModel">Book</a></p>
+                             <p>R @item["price"] | <a href="#" id="bookbtn_@item["id"]" data-name="@item["name"]" data-toggle="modal" data-target="#BookerModel">Book</a></p>
                         </div>
+
+                        <script type="text/javascript">
+                            document.getElementById("bookbtn_@item["id"]").addEventListener("click", function () {
+
+                                document.getElementById("stylename").innerHTML = "@item["name"]";
+                                document.getElementById("price").innerHTML = "R @item["price"]";
+
+                                document.getElementById("item_id").setAttribute("value",@item["id"]);       
+                                document.getElementById("user_id").setAttribute("value","1");
+                            });     
+                        </script>
+
                  }//href="/Home/Booker/@item["id"]" 
                  
             }
         </div>
     </div>
-        
+
     <div class="col-md-3 overview">
         <h2>Overview</h2>
         <ul>
