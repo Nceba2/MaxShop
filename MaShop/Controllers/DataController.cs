@@ -24,8 +24,14 @@ namespace MaShop.Controllers
         public string confirm_password { get; set; }
         public string email { get; set; }
 
+        public string _date { get; set; }
+        public string _time { get; set; }
+        public string _userId { get; set; }
+        public string _styleId { get; set; }
+
         private IApiRequestModel apiReq;
         private IValidationMoel validation;
+        private IBookerModel bookerModel;
 
         private string url;
         private bool validationBool;
@@ -36,6 +42,7 @@ namespace MaShop.Controllers
              this.url = "https://localhost:5002/api/values";
              this.apiReq = new ApiRequestModel();
              this.validation = new ValidationModel();
+            this.bookerModel = new BookerModel();
         }
 
         public JArray GetStyles()
@@ -74,7 +81,12 @@ namespace MaShop.Controllers
 
         public string DoBooking()
         {
-            return "booking";
+            bookerModel.date = _date;
+            bookerModel.time = _time;
+            bookerModel.user_id = _userId;
+            bookerModel.style_id = _styleId;
+
+            return bookerModel.AddEvent();
         }
 
         public string GetBookings()

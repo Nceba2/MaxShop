@@ -13,6 +13,14 @@ namespace MaShop.Controllers
 
         WebHeaderCollection _webQueryString { get; set; }
 
+        string _date { get; set; }
+
+        string _time { get; set; }
+
+        string _userId { get; set; }
+
+        string _styleId { get; set; }
+
         JArray GetStyles();
 
         string GetBookings();

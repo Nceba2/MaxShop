@@ -13,7 +13,7 @@
             you can book for you hair cut and pay later,<br/>
             or pay her on the system using ipay payment system<br/>
             we get a lot of booking request so please be on time<br/>
-            | @ViewData["Message"]
+            | @ViewData["bookingMessage"]
         </p>
     </div>
 </div>
@@ -28,7 +28,7 @@
   var dp = new DayPilot.Calendar("dp");
     
   dp.viewType = "Week";
-  dp.events.list = @Html.Raw(ViewData["Message"]);
+  dp.events.list = @Html.Raw(ViewData["Bookings"]);
   dp.init();
 
 </script>

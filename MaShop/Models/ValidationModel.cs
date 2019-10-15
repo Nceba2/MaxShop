@@ -17,9 +17,6 @@ namespace MaShop.Models
         public string phonenumber { get; set; }
         public string password { get; set; }
 
-        public ValidationModel()
-        {
-        }
         public bool ValidateLogin(JArray responseStr)
         {
 

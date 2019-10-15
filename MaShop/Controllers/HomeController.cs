@@ -53,7 +53,7 @@ namespace MaShop.Controllers
             if (RestCtr.DoLogin() == true)
             {
                 ViewData["Message"] = "logged";
-                return View("Booker");
+                return View("Index");
             }
             else
             {
@@ -66,12 +66,20 @@ namespace MaShop.Controllers
         {
             return View();
         }
-        public IActionResult Booker([FromForm] string date, [FromForm] string time)
+        public IActionResult Booker([FromQuery] string date, [FromQuery] string time, [FromQuery] string style_id, [FromQuery] string user_id)
         {
             //restructure booking table as id|text|start|end|userid|styleid
             //add insert delete view from api
+            if (date != null && time != null && style_id !=null && user_id !=null)
+            {
+                RestCtr._date = date;
+                RestCtr._time = time;
+                RestCtr._userId = user_id;
+                RestCtr._styleId = style_id;
 
-            ViewData["Message"] = RestCtr.GetBookings();
+                ViewData["bookingMessage"] = RestCtr.DoBooking();
+            }
+            ViewData["Bookings"] = RestCtr.GetBookings();
             return View();
         }
         public IActionResult Privacy()
