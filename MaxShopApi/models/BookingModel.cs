@@ -44,6 +44,21 @@ namespace MaxShopApi.models
             }
         }
 
+        public string insertBooking(string sql_query)
+        {
+            try
+            {
+                SqlConnModel.setData(sql_query);
+                MySqlDataReader reader = SqlConnModel.getData();
+                string sqlResponse = reader.GetString(reader.ToString());
+                return sqlResponse;
+            }
+            catch (Exception e)
+            {
+                return e.ToString();//refactor to null or error message
+            }
+        }
+
         internal JArray getBooking()
         {
             return rows;

@@ -42,9 +42,8 @@ namespace MaxShopApi.Controllers
             tables.setTable();
             return tables.getTable();
         }
-        [HttpPost]
-        public JArray Post([FromHeader] string tableName, [FromHeader] string date, [FromHeader] string time,
-                            [FromHeader] string style_id, [FromHeader] string user_id)
+        [HttpPost("book")]
+        public JArray Post([FromHeader] string tableName, [FromHeader] string date, [FromHeader] string time,[FromHeader] string style_id, [FromHeader] string user_id)
         {
             tables.date = date;
             tables.time = time;

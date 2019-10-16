@@ -45,6 +45,12 @@ namespace MaxShopApi.Controllers
                 case "login":
                     users.setUsers("SELECT * FROM `user` WHERE password='"+password+"' AND email='"+email+"'");
                     this._tableData = users.getUsers();
+
+                    /*
+                     * if user exist session contoller check if session already created
+                     * if session does not contain user append user to a session using sessionModel
+                     * else do nothing
+                     */
                     break;
 
                 case "styles":
@@ -59,13 +65,15 @@ namespace MaxShopApi.Controllers
 
                 case "bookings":
                     //booking.setBooking("SELECT * FROM booking");
+                    //fix values to mach required JSON format:
+                    //"[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"
                     this._tableData =JArray.Parse("[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"); 
                     break;
 
                 case "book":
                     //insert values to database table
-                    //booking.setBooking("SELECT * FROM booking");
-                    this._tableData = JArray.Parse("[{\"response\":\"booked\"}]");
+                    string response = booking.insertBooking("INSERT(user_id,style_id,date,time) VALUE(\""+userid+",\""+styleid+ ",\"" + date + ",\"" + time + ") INTO booking");
+                    this._tableData = JArray.Parse("[{\"response\":\"booked "+response+"\"}]");
                     break;
                 default:
                     this._tableData = null;
