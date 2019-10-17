@@ -13,14 +13,19 @@ namespace MaxShopApi.Controllers
         private StyleModel styles;
         private BookingModel booking;
 
-        private string email;
-        private string password;
+        //for login regidtration
+        public string email { get; set; }
+        public string password { get; set; }
         private JArray _tableData;
+        public string phonenumber { get; set; }
+        public string name { get; set; }
 
+        //for booking
         public string date { get; set; }
         public string time { get; set; }
         public string userid { get; set; }
         public string styleid { get; set; }
+
 
         public TablesController()
         {
