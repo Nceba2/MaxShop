@@ -2,9 +2,9 @@
 
 namespace MaxShopApi.Controllers
 {
-    public interface ITablesController
+    public interface IProccessController
     {
-        string tableName { get; set; }
+        string processName { get; set; }
 
         //for booking
         string date { get; set; }
@@ -13,12 +13,13 @@ namespace MaxShopApi.Controllers
         string styleid { get; set; }
 
         //for registering
+        string _Name { get; set; }
         string email { get; set; }
         string password { get; set; }
         string phonenumber { get; set; }
 
         void setCredentials(string userpassword, string emailaddress);
-        void setTable();
-        JArray getTable();
+        void setProccess();
+        JArray getFeedback();
     }
 }

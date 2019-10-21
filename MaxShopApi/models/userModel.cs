@@ -11,6 +11,7 @@ namespace MaxShopApi.models
     {
         private SqlConnectionModel SqlConnModel;
         private JArray rows;
+        private bool existance;
 
         public userModel()
         {
@@ -41,11 +42,52 @@ namespace MaxShopApi.models
                     columns["profile_pic"] = profile_pic;
                     columns["type"] = type;
 
-
                     this.rows.Add(columns);
                 }
             }
         }
+
+        public string RegisterUser(string sql_query)
+        {
+            try
+            {
+                SqlConnModel.setData(sql_query);
+                MySqlDataReader reader = SqlConnModel.getData();
+                string sqlResponse = reader.GetString(reader.ToString());
+                return sqlResponse;
+            }
+            catch (Exception e)
+            {
+                return e.ToString();//refactor to null or error message
+            }
+        }
+        public void CheckUserExist(string email)
+        {
+            string sql_query = "SELECT * FROM user WHERE email='" + email + "'";
+            SqlConnModel.setData(sql_query);
+            MySqlDataReader reader = SqlConnModel.getData();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    if (email == reader.GetString(reader.GetOrdinal("email")))
+                    {
+                        this.existance = true;//user already exists
+                    }
+                    else
+                    {
+                        this.existance = false;
+                    }
+                }
+            }
+        }
+
+        public bool getExistance()
+        {
+            return existance;
+        }
+
         public JArray getUsers()
         {
             return rows;

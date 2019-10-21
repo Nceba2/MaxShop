@@ -5,20 +5,22 @@ using Newtonsoft.Json.Linq;
 
 namespace MaxShopApi.Controllers
 {
-    public class TablesController: ITablesController
+    public class ProccessController : IProccessController
     {
-        public string tableName { get; set; }
+        public string processName { get; set; }
 
         private userModel users;
         private StyleModel styles;
         private BookingModel booking;
+        private string response {get; set;}
 
         //for login regidtration
+        //public string Name { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-        private JArray _tableData;
+        private JArray feedback_JArray;
         public string phonenumber { get; set; }
-        public string name { get; set; }
+        public string _Name { get; set; }
 
         //for booking
         public string date { get; set; }
@@ -27,7 +29,7 @@ namespace MaxShopApi.Controllers
         public string styleid { get; set; }
 
 
-        public TablesController()
+        public ProccessController()
         {
             users = new userModel();
             styles = new StyleModel();
@@ -39,17 +41,26 @@ namespace MaxShopApi.Controllers
             this.password = userpassword;
         }
 
-        public void setTable()
+        public void setProccess()
         {
-            switch (tableName)
+            switch (processName)
             {
                 case "users":
                     users.setUsers("SELECT * FROM user");
-                    this._tableData = users.getUsers();
+                    this.feedback_JArray = users.getUsers();
                     break;
+
+                case "check_users_existance":
+                    /*
+                     * the 
+                     */
+                    users.CheckUserExist(email);
+                    this.feedback_JArray = JArray.Parse("[{\"exist\":\""+users.getExistance()+"\"}]");
+                    break;
+
                 case "login":
                     users.setUsers("SELECT * FROM `user` WHERE password='"+password+"' AND email='"+email+"'");
-                    this._tableData = users.getUsers();
+                    this.feedback_JArray = users.getUsers();
 
                     /*
                      * if user exist session contoller check if session already created
@@ -58,37 +69,46 @@ namespace MaxShopApi.Controllers
                      */
                     break;
 
-                case "styles":
-                    styles.setStyles("SELECT * FROM styles");
-                    this._tableData = styles.getStyles();
+                case "register":
+                    if (users.getExistance() == false)
+                        response = users.RegisterUser("SELECT * FROM booking");//refactor to be insert statement
+                    this.feedback_JArray = JArray.Parse("[{\"response\":\"registered " + response + "\"}]");
+                    else
+                        this.feedback_JArray = JArray.Parse("[{\"response\":\"user already exists\"}]");
                     break;
 
-                case "order":
-                    booking.setBooking("SELECT * FROM booking");
-                    this._tableData = booking.getBooking();
+                case "styles":
+                    styles.setStyles("SELECT * FROM styles");
+                    this.feedback_JArray = styles.getStyles();
                     break;
 
                 case "bookings":
                     //booking.setBooking("SELECT * FROM booking");
                     //fix values to mach required JSON format:
                     //"[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"
-                    this._tableData =JArray.Parse("[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"); 
+                    this.feedback_JArray = JArray.Parse("[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"); 
                     break;
 
                 case "book":
                     //insert values to database table
-                    string response = booking.insertBooking("INSERT(user_id,style_id,date,time) VALUE(\""+userid+",\""+styleid+ ",\"" + date + ",\"" + time + ") INTO booking");
-                    this._tableData = JArray.Parse("[{\"response\":\"booked "+response+"\"}]");
+                    users.CheckUserExist(email);
+
+                    if (users.getExistance() == false)
+                        response = booking.insertBooking(userid, styleid, date, time);
+                    else
+                        response = "user already exists";
+                    this.feedback_JArray = JArray.Parse("[{\"response\":\"booked "+response+"\"}]");
                     break;
+
                 default:
-                    this._tableData = null;
+                    this.feedback_JArray = null;
                     break;
             }
         }
 
-        public JArray getTable()
+        public JArray getFeedback()
         {
-            return _tableData;
+            return feedback_JArray;
         }
     }
 }

@@ -12,20 +12,20 @@ namespace MaxShopApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        ITablesController tables = new TablesController();
+        IProccessController process = new ProccessController();
 
         // GET api/values
         [HttpGet]
         public JArray Get()
         {
-            tables.tableName = "styles";
-            tables.setTable();
-            return tables.getTable();
+            process.processName = "styles";
+            process.setProccess();
+            return process.getFeedback();
         }
 
         // GET api/values/table/styles
         [HttpGet("table/{tablename}")]
-        public JArray Get(string tableName)
+        public JArray Get(string _processName)
         {
             /*
              * the method requests information to required models
@@ -35,57 +35,62 @@ namespace MaxShopApi.Controllers
              * setTable would set the information, prepare it as JArray for retreval.
              * getTable() would provide the information as a JAarray
              */
-            tables.tableName = tableName;
-            tables.setTable();
-            return tables.getTable();
+            process.processName = _processName;
+            process.setProccess();
+            return process.getFeedback();
         }
 
         //the following method is for logging in
         // POST api/values
         [HttpPost]
-        public JArray Post([FromHeader] string tableName, [FromHeader] string password, [FromHeader] string email)
+        public JArray Post([FromHeader] string _processName, [FromHeader] string password, [FromHeader] string email)
         {
             /*
              * the method posts credentials to required models
              * the models then checks for the existance of the user on database and return feedback
              */
-            tables.setCredentials(password, email);
-            tables.tableName = tableName;
-            tables.setTable();
-            return tables.getTable();
+            process.setCredentials(password, email);
+            process.processName = _processName;
+            process.setProccess();
+            return process.getFeedback();
         }
 
         //for regitering a user
-        [HttpPost("Register")]
-        public JArray Post([FromHeader] string tableName,[FromHeader] string name, [FromHeader] string password, [FromHeader] string email,[FromHeader] string phonenumber)
+        [HttpPost("register")]
+        public JArray Register([FromHeader] string _processName, [FromHeader] string name, [FromHeader] string password, [FromHeader] string email,[FromHeader] string phonenumber)
         {
-            tables.name = name;
-            tables.email = email;
-            tables.password = password;
-            tables.phonenumber = phonenumber;
+            process._Name = name;
+            process.email = email;
+            process.password = password;
+            process.phonenumber = phonenumber;
 
-            tables.tableName = tableName;
-            tables.setTable();
-            return tables.getTable();
+            process.processName = _processName;
+            process.setProccess();
+            return process.getFeedback();
         }
 
         //for booking a haircut
         [HttpPost("book")]
-        public JArray Post([FromHeader] string tableName, [FromHeader] string date, [FromHeader] string time,[FromHeader] string style_id, [FromHeader] string user_id)
+        public JArray Post([FromHeader] string _processName, [FromHeader] string date, [FromHeader] string time,[FromHeader] string style_id, [FromHeader] string user_id)
         {
             /*
              * the method posts information to required models
              * the models then insert to the database and return feedback
              */
-            tables.date = date;
-            tables.time = time;
-            tables.userid = user_id;
-            tables.styleid = style_id;
+            process.date = date;
+            process.time = time;
+            process.userid = user_id;
+            process.styleid = style_id;
 
-            tables.tableName = tableName;
-            tables.setTable();
-            return tables.getTable();
+            process.processName = _processName;
+            process.setProccess();
+            return process.getFeedback();
         }
 
+        [HttpGet("pulse")]
+        public string pulse([FromHeader] string check)
+        {
+            return "pusle says check= " + check;
+        }
     }
 }
