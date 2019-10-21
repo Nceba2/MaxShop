@@ -10,11 +10,13 @@ namespace MaxShopApi.models
     internal class BookingModel
     {
         private SqlConnectionModel SqlConnModel;
+        private StyleModel styleModel;
         private JArray rows;
 
         public BookingModel()
         {
             SqlConnModel = new SqlConnectionModel();
+            styleModel = new StyleModel();
             this.rows = new JArray();
         }
         internal void setBooking(string sql_query)
@@ -29,15 +31,20 @@ namespace MaxShopApi.models
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
-                    String name = reader.GetString(reader.GetOrdinal("user_id"));
-                    String email = reader.GetString(reader.GetOrdinal("style_id"));
+                    String _styleid = reader.GetString(reader.GetOrdinal("style_id"));
                     string start = reader.GetString(reader.GetOrdinal("start"));
                     String end = reader.GetString(reader.GetOrdinal("end"));
 
+                    //get style name by id
+                    styleModel.setStyles("SELECT name FROM styles WHERE id=\""+_styleid+"\"");
+                    dynamic responseListObj = styleModel.getStyles().OfType<JObject>().ToList();
+                    string styleName = responseListObj[0]["name"];
+
+                    //fix values to mach required JSON format:
+                    //"[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"
                     var columns = new JObject();
                     columns["id"] = id.ToString();
-                    columns["user_id"] = name;
-                    columns["style_id"] = email;
+                    columns["text"] = styleName;
                     columns["start"] = start;
                     columns["end"] = end;
 
@@ -59,7 +66,7 @@ namespace MaxShopApi.models
                 string endtime = time.Replace("00", "30");
                 string start = date + "T" + time + ":00";
                 string end = date + "T" + endtime + ":00";
-                string sql_query = "INSERT(user_id,style_id,start,end,total_price) VALUE(\"" + userid + "\",\"" + styleid + "\",\"" + start + "\",\"" + end + "\",\"R50\") INTO booking";
+                string sql_query = "INSERT(user_id,style_id,start,end,total_price) VALUES(\"" + userid + "\",\"" + styleid + "\",\"" + start + "\",\"" + end + "\",\"R50\") INTO booking";
 
                 SqlConnModel.setData(sql_query);
                 MySqlDataReader reader = SqlConnModel.getData();

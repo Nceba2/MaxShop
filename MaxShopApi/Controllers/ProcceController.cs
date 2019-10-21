@@ -83,10 +83,11 @@ namespace MaxShopApi.Controllers
                     break;
 
                 case "bookings":
-                    //booking.setBooking("SELECT * FROM booking");
                     //fix values to mach required JSON format:
                     //"[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"
-                    this.feedback_JArray = JArray.Parse("[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"); 
+
+                    booking.setBooking("SELECT * FROM booking");
+                    this.feedback_JArray = booking.getBooking(); 
                     break;
 
                 case "book":
