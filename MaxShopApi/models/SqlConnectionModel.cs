@@ -27,6 +27,17 @@ namespace MaxShopApi.models
             //command.Dispose();
         }
 
+        public void insertData(string query)
+        {
+            con.Open();
+            using (con)
+            {
+                var comm = con.CreateCommand();
+                comm.CommandText = query;
+                comm.ExecuteNonQuery();
+            }
+        }
+
         public MySqlDataReader getData()
         {
             //con.Close();

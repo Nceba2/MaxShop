@@ -71,10 +71,14 @@ namespace MaxShopApi.Controllers
 
                 case "register":
                     if (users.getExistance() == false)
+                    {
                         response = users.RegisterUser("SELECT * FROM booking");//refactor to be insert statement
-                    this.feedback_JArray = JArray.Parse("[{\"response\":\"registered " + response + "\"}]");
+                        this.feedback_JArray = JArray.Parse("[{\"response\":\"registered " + response + "\"}]");
+                    }
                     else
+                    {
                         this.feedback_JArray = JArray.Parse("[{\"response\":\"user already exists\"}]");
+                    }
                     break;
 
                 case "styles":
@@ -95,9 +99,13 @@ namespace MaxShopApi.Controllers
                     users.CheckUserExist(email);
 
                     if (users.getExistance() == false)
+                    {
                         response = booking.insertBooking(userid, styleid, date, time);
+                    }
                     else
+                    {
                         response = "user already exists";
+                    }
                     this.feedback_JArray = JArray.Parse("[{\"response\":\"booked "+response+"\"}]");
                     break;
 

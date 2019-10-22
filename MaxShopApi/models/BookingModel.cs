@@ -66,12 +66,11 @@ namespace MaxShopApi.models
                 string endtime = time.Replace("00", "30");
                 string start = date + "T" + time + ":00";
                 string end = date + "T" + endtime + ":00";
-                string sql_query = "INSERT(user_id,style_id,start,end,total_price) VALUES(\"" + userid + "\",\"" + styleid + "\",\"" + start + "\",\"" + end + "\",\"R50\") INTO booking";
+                string sql_query = "INSERT INTO booking(user_id,style_id,start,end,total_price) VALUES( "+userid+", "+styleid+", '"+start+"', '"+end+"',55)";
 
-                SqlConnModel.setData(sql_query);
-                MySqlDataReader reader = SqlConnModel.getData();
-                string sqlResponse = reader.GetString(reader.ToString());
-                return sqlResponse;
+                SqlConnModel.insertData(sql_query);
+
+                return "success";
             }
             catch (Exception e)
             {
