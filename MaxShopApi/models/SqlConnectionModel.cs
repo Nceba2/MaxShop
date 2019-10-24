@@ -16,32 +16,49 @@ namespace MaxShopApi.models
         {
             var configuration = GetConfiguration();
             this.con = new MySqlConnection(configuration.GetSection("ConnectionStrings").GetSection("DefualtConnection").Value);
-            
         }
 
         public void setData(String query)
         {
-            con.Open();
-            MySqlCommand command = new MySqlCommand(query, con);
-            this.reader = command.ExecuteReader();
-            //command.Dispose();
+            if(con.State != ConnectionState.Open)
+            {
+                con.Open();
+                MySqlCommand command = new MySqlCommand(query, con);
+                this.reader = command.ExecuteReader();
+            }
+            else
+            {
+                ConCloseAndDespose(query);
+            }
         }
 
         public void insertData(string query)
         {
-            con.Open();
-            using (con)
+            if (con.State != ConnectionState.Open)
             {
-                var comm = con.CreateCommand();
-                comm.CommandText = query;
-                comm.ExecuteNonQuery();
+                con.Open();
+                using (con)
+                {
+                    var comm = con.CreateCommand();
+                    comm.CommandText = query;
+                    comm.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                ConCloseAndDespose(query);
             }
         }
 
         public MySqlDataReader getData()
         {
-            //con.Close();
             return reader;
+        }
+        public void ConCloseAndDespose(string query)
+        {
+            MySqlCommand command = new MySqlCommand(query, con);
+            command.Dispose();
+            con.Close();
         }
 
         public IConfigurationRoot GetConfiguration()

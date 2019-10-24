@@ -13,7 +13,7 @@ namespace MaxShopApi.Controllers
     public class ValuesController : ControllerBase
     {
         IProccessController process = new ProccessController();
-
+        private JArray styles { get; set; }
         // GET api/values
         [HttpGet]
         public JArray Get()
@@ -24,7 +24,7 @@ namespace MaxShopApi.Controllers
         }
 
         // GET api/values/table/styles
-        [HttpGet("table/{tablename}")]
+        [HttpGet("table/{_processName}")]
         public JArray Get(string _processName)
         {
             /*
@@ -37,7 +37,8 @@ namespace MaxShopApi.Controllers
              */
             process.processName = _processName;
             process.setProccess();
-            return process.getFeedback();
+            JArray JResponse = process.getFeedback();
+            return  JResponse;
         }
 
         //the following method is for logging in

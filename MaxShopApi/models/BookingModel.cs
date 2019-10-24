@@ -10,15 +10,17 @@ namespace MaxShopApi.models
     internal class BookingModel
     {
         private SqlConnectionModel SqlConnModel;
-        private StyleModel styleModel;
+        private StyleModel styles;
         private JArray rows;
+        public JArray stylesArray { get; set; }
 
         public BookingModel()
         {
             SqlConnModel = new SqlConnectionModel();
-            styleModel = new StyleModel();
+            styles = new StyleModel();
             this.rows = new JArray();
         }
+
         internal void setBooking(string sql_query)
         {
             //execute sql query
@@ -27,28 +29,31 @@ namespace MaxShopApi.models
 
             if (reader.HasRows)
             {
+                int n= 1;
+
                 //if query results are returned... build a Json array for the results
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(reader.GetOrdinal("id"));
-                    String _styleid = reader.GetString(reader.GetOrdinal("style_id"));
-                    string start = reader.GetString(reader.GetOrdinal("start"));
-                    String end = reader.GetString(reader.GetOrdinal("end"));
+                    int _styleid = reader.GetInt32(reader.GetOrdinal("style_id"));
+                    string start = reader.GetDateTime(reader.GetOrdinal("start")).ToString("yyyy-MM-dd HH:mm:ss");
+                    String end = reader.GetDateTime(reader.GetOrdinal("end")).ToString("yyyy-MM-dd HH:mm:ss");
 
                     //get style name by id
-                    styleModel.setStyles("SELECT name FROM styles WHERE id=\""+_styleid+"\"");
-                    dynamic responseListObj = styleModel.getStyles().OfType<JObject>().ToList();
-                    string styleName = responseListObj[0]["name"];
 
-                    //fix values to mach required JSON format:
+                    dynamic responseListObj = this.stylesArray.OfType<JObject>().ToList();
+                    int styleID = _styleid - 1;
+                    string styleName = responseListObj[styleID]["name"];
+
                     //"[{\"id\":\"5\",\"text\":\"Germen Cut\",\"start\":\"2019-10-18T10:30:00\",\"end\":\"2019-10-18T11:30:00\"}]"
                     var columns = new JObject();
-                    columns["id"] = id.ToString();
+                    columns["id"] = n;
                     columns["text"] = styleName;
-                    columns["start"] = start;
-                    columns["end"] = end;
+                    columns["start"] = start.Replace(" ","T");
+                    columns["end"] = end.Replace(" ","T");
 
                     this.rows.Add(columns);
+                    n++;
                 }
             }
         }
