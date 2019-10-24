@@ -52,8 +52,8 @@ namespace MaShop.Controllers
 
             if (RestCtr.DoLogin() == true)
             {
-                ViewData["Message"] = "logged";
-                return View("Index");
+                ViewData["Message"] = "logged in";
+                return View("Login");
             }
             else
             {
@@ -66,7 +66,7 @@ namespace MaShop.Controllers
         {
             return View();
         }
-        public IActionResult Booker([FromQuery] string date, [FromQuery] string time, [FromQuery] string style_id, [FromQuery] string user_id)
+        public IActionResult Booker([FromForm] string date, [FromForm] string time, [FromForm] string style_id, [FromForm] string user_id)
         {
             //restructure booking table as id|text|start|end|userid|styleid
             //add insert delete view from api
