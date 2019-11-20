@@ -21,7 +21,7 @@ namespace MaShop.Models
         {
 
             _webQueryString = new WebHeaderCollection() { };
-            _webQueryString.Add("tableName", "login");
+            _webQueryString.Add("_processName", "login");
             _webQueryString.Add("password", this.password);
             _webQueryString.Add("email", this.email);
 
@@ -48,7 +48,7 @@ namespace MaShop.Models
 
             if (this.name !=null && this.phonenumber !=null && this.password !=null && this.email !=null) {
                 _webQueryString = new WebHeaderCollection() { };
-                _webQueryString.Add("process", "register");
+                _webQueryString.Add("_processName", "register");
                 _webQueryString.Add("name", this.name);
                 _webQueryString.Add("phonenumber", this.phonenumber);
                 _webQueryString.Add("password", this.password);

@@ -4815,7 +4815,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 			setGlobalEval( tmp );
 		}
 
-		// Capture executables
+		// Capture execuprocess
 		if ( scripts ) {
 			j = 0;
 			while ( ( elem = tmp[ j++ ] ) ) {

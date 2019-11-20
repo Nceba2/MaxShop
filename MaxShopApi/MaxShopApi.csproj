@@ -22,6 +22,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="MySql.Data" Version="8.0.18" />
+    <PackageReference Include="Mono.Terminal" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>

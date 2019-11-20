@@ -22,11 +22,12 @@ namespace MaShop.Models
             //api to sql query.
 
             _webQueryString = new WebHeaderCollection() { };
-            _webQueryString.Add("tableName", "book");
+            _webQueryString.Add("_processName", "book");
             _webQueryString.Add("date", this.date);
             _webQueryString.Add("time", this.time);
-            _webQueryString.Add("userId", this.user_id);
-            _webQueryString.Add("styleId", this.style_id);
+            _webQueryString.Add("user_id", this.user_id);
+            _webQueryString.Add("style_id", this.style_id);
+            url += "/book";
 
             JArray responJArray = apiReq.ApiPost(url, _webQueryString);
             dynamic responseListObj = responJArray.OfType<JObject>().ToList();
@@ -39,14 +40,14 @@ namespace MaShop.Models
         public string DeleteEvent()
         {
             //pass values to api
-            //api to sql query. 
+            //api to sql query. deleting information by id
             return null;
         }
 
         public string UpdateEvent()
         {
             //pass values to api
-            //api to sql query. 
+            //api to sql query. updating information by id
             return null;
         }
     }
